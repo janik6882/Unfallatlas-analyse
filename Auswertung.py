@@ -4,12 +4,14 @@ import pandas as pd
 MAPBOX_API_KEY = json.load(open("tokens.json", "r"))["pub_tok"]
 import pydeck as pdk
 data = json.load(open("out.json", "r"))
-df = pd.read_csv((os.path.join("Daten", "Unfallorte2016_EPSG25832_CSV", "csv", "Unfallorte_2016_LinRef.csv")), sep="\t", lineterminator="\r")
-
+df = pd.read_csv((os.path.join("Daten", "Unfallorte2016_EPSG25832_CSV", "csv", "Unfallorte_2016_LinRef.csv")), sep="\t", lineterminator="\n", decimal=",")
+df = df[:-1]
+df.columns = ["lng", "lat"]
+print df
 #Daten\Unfallorte2016_EPSG25832_CSV\csv\Unfallorte_2016_LinRef.csv
 layer = pdk.Layer(
-    'ScatterplotLayer',
-    data,
+    'HexagonLayer',
+    [[[13.30511, 52.46556]]],
     get_position=['lng', 'lat'],
     auto_highlight=True,
     elevation_scale=50,
